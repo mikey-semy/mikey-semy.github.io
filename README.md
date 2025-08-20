@@ -1,7 +1,5 @@
 # mikey-semy.github.io
 
-Eleventy сайт.
-
 Установка:
 ```bash
 yarn
