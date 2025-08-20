@@ -4,4 +4,6 @@ description: "Intro / портфолио — проекты, инфрастру�
 baseurl: ""
 url: ""
 markdown: kramdown
+kramdown:
+  input: GFM
 theme: minima
