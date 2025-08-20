@@ -1,0 +1,49 @@
+name: Build and Deploy Jekyll to gh-pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Prepare gh-pages branch
+        run: |
+          BRANCH=gh-pages
+          rm -rf out || true
+          mkdir out
+          # copy repository source to out
+          git ls-files -z | xargs -0 -I{} bash -c 'mkdir -p "out/$(dirname "{}")"; cp "{}" "out/{}" || true'
+          cd out
+          git init
+          git remote add origin "https://github.com/${{ github.repository }}.git"
+          git checkout -b $BRANCH || git branch -M $BRANCH
+
+      - name: Commit & Push to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          cd out
+          git add -A
+          git commit -m "Deploy (source) from main: ${{ github.sha }}" || true
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:gh-pages
+
+      - name: Trigger Pages build (optional)
+        run: echo "Pages build will run automatically for gh-pages branch"

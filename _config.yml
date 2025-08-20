@@ -1,0 +1,9 @@
+title: mikey-semy
+email: toshkin.mikhail@ya.ru
+description: "Intro / портфолио — проекты, инфраструктура, контакты"
+baseurl: ""
+url: ""
+markdown: kramdown
+kramdown:
+  input: GFM
+theme: minima
