@@ -1,4 +1,4 @@
-name: Build and Deploy Eleventy to gh-pages
+name: Build and Deploy Jekyll to gh-pages
 
 on:
   push:
@@ -6,33 +6,43 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
+      - name: Configure Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Prepare gh-pages branch
+        run: |
+          BRANCH=gh-pages
+          rm -rf out || true
+          mkdir out
+          # copy repository source to out
+          git ls-files -z | xargs -0 -I{} bash -c 'mkdir -p "out/$(dirname "{}")"; cp "{}" "out/{}" || true'
+          cd out
+          git init
+          git remote add origin "https://github.com/${{ github.repository }}.git"
+          git checkout -b $BRANCH || git branch -M $BRANCH
 
-      - name: Build site
-        run: npm run build
+      - name: Commit & Push to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd out
+          git add -A
+          git commit -m "Deploy (source) from main: ${{ github.sha }}" || true
+          git push --force --quiet origin HEAD:gh-pages
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
-          publish_branch: gh-pages
-          keep_files: true
+      - name: Trigger Pages build (optional)
+        run: echo "Pages build will run automatically for gh-pages branch"

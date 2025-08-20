@@ -1,7 +1,9 @@
 ---
-title: mikey-semy — intro
-layout: src/_includes/base.njk
+title: Главная
+layout: default
 ---
-<h2>Привет — я Михаил (@mikey-semy)</h2>
-<p>Краткое: занимаюсь backend/frontend, devops, автоматизацией. Основные технологии: FastAPI, Django, aiogram, React + TypeScript, RabbitMQ.</p>
-<p>Навигация: <a href="/projects.html">Проекты</a> · <a href="/infrastructure.html">Инфраструктура</a> · <a href="/experience.html">Опыт</a></p>
+## Привет — я Михаил (@mikey-semy)
+
+Краткое: backend/frontend, devops, автоматизация. Основные технологии: FastAPI, Django, aiogram, React + TypeScript, RabbitMQ.
+
+Навигация: [Проекты](/projects.html) · [Инфраструктура](/infrastructure.html) · [Опыт](/experience.html)

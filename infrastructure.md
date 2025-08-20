@@ -1,21 +1,11 @@
 ---
 title: Инфраструктура
-layout: src/_includes/base.njk
+layout: default
 ---
 ## Сервисы и доступы
 
-{% set sites = require('./_data/sites.json') %}
-
-<table>
-<tr><th>Сервис</th><th>Тип</th><th>URL</th><th>Примечание</th></tr>
-{% for s in sites %}
-<tr>
-  <td>{{ s.name }}</td>
-  <td>{{ s.type }}</td>
-  <td>
-    {% if s.url %}<a href="{{ s.url }}" target="_blank">{{ s.url }}</a>{% else %}<span class="tag">нет/приват</span>{% endif %}
-  </td>
-  <td>{{ s.note or "" }}</td>
-</tr>
+| Сервис | Тип | URL | Примечание |
+|--------|-----|-----|-----------|
+{% for s in site.data.sites %}
+| {{ s.name }} | {{ s.type }} | {% if s.url %}[{{ s.url }}]({{ s.url }}){% else %}<span class="tag">нет/приват</span>{% endif %} | {{ s.note | default: "" }} |
 {% endfor %}
-</table>
