@@ -39,10 +39,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -e
           cd out
           git add -A
           git commit -m "Deploy (source) from main: ${{ github.sha }}" || true
-          git push --force --quiet origin HEAD:gh-pages
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:gh-pages
 
       - name: Trigger Pages build (optional)
         run: echo "Pages build will run automatically for gh-pages branch"
