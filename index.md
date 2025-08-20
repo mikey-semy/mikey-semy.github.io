@@ -6,4 +6,4 @@ layout: default
 
 Краткое: backend/frontend, devops, автоматизация. Основные технологии: FastAPI, Django, aiogram, React + TypeScript, RabbitMQ.
 
-Навигация: [Проекты](/projects.html) · [Инфраструктура](/infrastructure.html) · [Опыт](/experience.html)
+Навигация: [Документация](/docs.html) · [Проекты](/projects.html) · [Инфраструктура](/infrastructure.html) · [Опыт](/experience.html)
