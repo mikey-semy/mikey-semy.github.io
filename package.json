@@ -1,0 +1,14 @@
+{
+  "name": "mikey-semy.github.io",
+  "version": "1.0.0",
+  "repository": "https://github.com/mikey-semy/mikey-semy.github.io.git",
+  "author": "mikey-semy <toshkin.mikhail@yandex.ru>",
+  "license": "MIT",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0"
+  }
+}
